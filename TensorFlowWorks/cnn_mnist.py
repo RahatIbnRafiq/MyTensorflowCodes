@@ -2,6 +2,16 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+"""
+Tweaked the architecture  that was in the tensowflow website. added Adam Optimizer and another two
+fully connected layers with 2048 and 1024 neurons respectively. dropout is 0.5 instead of 0.4.
+step size is reduced to 1000 and the final accuracy was 99.1 percent. The tensorflow website's one
+had 20000 steps and had an accuracy of 97.3 percent. 
+link:https://www.tensorflow.org/tutorials/layers
+
+
+"""
+
 # Imports
 import numpy as np
 import tensorflow as tf
@@ -71,9 +81,6 @@ def main(unused_argv):
     eval_labels = np.asarray(mnist.test.labels, dtype=np.int32)
     # Create the Estimator
     mnist_classifier = tf.estimator.Estimator(model_fn=cnn_model_fn)
-    
-    #tensors_to_log = {"probabilities": "softmax_tensor"}
-    #logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=10)
     train_input_fn = tf.estimator.inputs.numpy_input_fn(
                      x={"x": train_data},
                      y=train_labels,
